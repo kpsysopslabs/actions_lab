@@ -1,0 +1,46 @@
+name: Main Workflow
+run-name: Execute Main Workflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v5
+      - name: Dispaly Message in system console
+        run: echo "NGINX will be installed here"
+  install-nginx:
+    needs: init
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v5
+      - name: Install nginx
+        run: | 
+          sudo apt update
+          sudo apt install nginx -y
+      - name: Start nginx service
+        run: sudo systemctl --now enable nginx
+      - name: Add addional line to index.html
+        run: echo "Hello from GitHub Actions" | sudo tee -a /var/www/html/index.html
+  verify-nginx:
+    needs: install-nginx
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v5
+      - name: Verify nginx installation
+        run: |
+          curl -I localhost | grep "200 OK" && curl -I localhost | grep "Hello from GitHub Actions"
+          ( $? -eq 0 ) && echo "Nginx is installed and running successfully" || ( echo "Nginx installation or verification failed" && exit 1 )
+  cleanup:
+    needs: verify-nginx
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v5
+      - name: Stop enginx service
+        run: sudo systemctl --now disable nginx
