@@ -37,6 +37,6 @@ jobs:
       - name: Verify nginx installation
         run: |
           curl -I localhost | grep "200 OK"  && echo "NGINX is running"
-          curl localhost | grep "GitHub Actions"  && echo "NGINX is running"
+          curl localhost | grep "GitHub Actions"  && echo "NGINX is serving the modified page"
 
     
