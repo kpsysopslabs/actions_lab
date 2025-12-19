@@ -24,9 +24,9 @@ jobs:
           sudo apt install nginx -y
       - name: Start nginx service
         run: sudo systemctl --now enable nginx
-        
+
       - name: Add addional line to index.html
-        run: echo "Hello from GitHub Actions" | sudo tee -a /var/www/html/index.html
+        run: echo "Hello from GitHub Actions" > /var/www/html/index.html
 
       - name: Verify nginx installation
         run: |
