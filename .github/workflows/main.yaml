@@ -26,7 +26,7 @@ jobs:
         run: sudo systemctl --now enable nginx
 
       - name: Add addional line to index.html
-        run: echo "Hello from GitHub Actions" > /var/www/html/index.html
+        run: sudo $( echo "Hello from GitHub Actions" > /var/www/html/index.html ) 
 
       - name: Verify nginx installation
         run: |
