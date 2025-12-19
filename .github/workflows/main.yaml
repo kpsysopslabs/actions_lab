@@ -28,6 +28,12 @@ jobs:
       - name: Add addional line to index.html
         run: sudo sed -i 's|</body>|<p>Hello from GitHub Actions</p></body>|' /var/www/html/index.html
 
+      - name: Display nginx page
+        run: cat /var/www/html/index.html
+
+      - name: Curl localhost
+        run: curl localhost
+
       - name: Verify nginx installation
         run: |
           curl -I localhost | grep "200 OK"  && echo "NGINX is running"
