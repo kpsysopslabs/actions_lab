@@ -30,6 +30,6 @@ jobs:
 
       - name: Verify nginx installation
         run: |
-          curl -I localhost | grep "200 OK"
-          echo $?  
-          ( $? -eq 0 ) && echo "Nginx is installed and running successfully" || ( echo "Nginx installation or verification failed" && exit 1 )
+          curl -I localhost | grep "200 OK"  && echo "NGINX is running"
+
+    
